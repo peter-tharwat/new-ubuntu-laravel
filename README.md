@@ -19,8 +19,9 @@
 ### How to Use
 
 ```php
-sudo chmod +x script.sh
-./script.sh -d example.com
+
+wget https://raw.githubusercontent.com/peter-tharwat/new-ubuntu-laravel/master/script.sh ; sudo chmod +x script.sh ; ./script.sh -d example.com
+# Replace example.com with your domain
 ```
 
 ### How To Debug LIVE
