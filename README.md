@@ -2,19 +2,19 @@
 
 ### install Important softwares on fresh Ubuntu instance
 
-- [ ]  PREPAIRE INSTALLING
-- [ ]  REMOVING APACHE
-- [ ]  INSTALLING PHP 8.1
-- [ ]  INSTALLING NGINX
-- [ ]  OPEN NGINX PORTS
-- [ ]  INSTALLING PHP EXTENSIONS
-- [ ]  INSTALLING NPM
-- [ ]  INSTALLING CERTBOT (SSL GENERATOR)
-- [ ]  RESTARTING NGINX
-- [ ]  CREATING NGINX FILE FOR [example.com](http://example.com/)
-- [ ]  GENERATING SSL CERTIFICATE FOR [example.com](http://example.com/)
-- [ ]  FINALIZE INSTALLING
-- [ ]  RESTARTING NGINX
+- ✅  PREPAIRE Installing
+- ✅  REMOVING APACHE
+- ✅  Installing PHP 8.1
+- ✅  Installing NGINX
+- ✅  OPEN NGINX PORTS
+- ✅  Installing PHP EXTENSIONS
+- ✅  Installing NPM
+- ✅  Installing CERTBOT (SSL GENERATOR)
+- ✅  CREATING NGINX FILE FOR [example.com](http://example.com/)
+- ✅  GENERATING SSL CERTIFICATE FOR [example.com](http://example.com/)
+- ✅  Finalize Installing
+- ✅  Installing MySQL
+- ✅  Pushing Cronjobs
 
 ### How to Use
 
@@ -29,3 +29,6 @@ wget https://raw.githubusercontent.com/peter-tharwat/new-ubuntu-laravel/master/s
 ```php
 tail -f script_log.log
 ```
+
+### 
+Made With Love By [PeterAyoub](https://PeterAyoub.me/)
