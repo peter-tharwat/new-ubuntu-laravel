@@ -77,7 +77,7 @@ echo $green_color"[SUCCESS]";
 echo $green_color"[######################################]";
 
 echo $no_color"CREATING NGINX FILE FOR $domain";
-sudo rm -rf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default >> $script_log_file 2>/dev/null
+#sudo rm -rf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default >> $script_log_file 2>/dev/null
 sudo touch /etc/nginx/sites-available/$domain >> $script_log_file 2>/dev/null
 sudo bash -c "echo 'server {
     listen 80;
@@ -101,6 +101,16 @@ sudo mkdir /var/www/html/$domain >> $script_log_file 2>/dev/null
 sudo bash -c "echo  '<h1>Hello My Friend, It Works :)</h1><h4>PeterAyoub</h4>' > /var/www/html/$domain/index.php" >> $script_log_file 2>/dev/null
 echo $green_color"[SUCCESS]";
 echo $green_color"[######################################]";
+
+
+echo $no_color"RESTARTING NGINX";
+sudo pkill -f nginx & wait $! >> $script_log_file 2>/dev/null
+sudo systemctl start nginx >> $script_log_file 2>/dev/null
+sudo service nginx restart >> $script_log_file 2>/dev/null
+echo $green_color"[SUCCESS]";
+echo $green_color"[######################################]";
+
+
 
 
 echo $no_color"GENERATING SSL CERTIFICATE FOR $domain"
