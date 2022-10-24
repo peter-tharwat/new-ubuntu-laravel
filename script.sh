@@ -244,7 +244,3 @@ echo $green_color"[######################################]";
 
 echo $green_color"[MADE WITH LOVE BY Peter Ayoub PeterAyoub.me]";
 echo $green_color"[####################]";
-
-
-
-wget https://raw.githubusercontent.com/peter-tharwat/new-ubuntu-laravel/master/script.sh ; sudo chmod +x script.sh ; ./script.sh -d panel.peterayoub.me
