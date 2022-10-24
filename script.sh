@@ -29,6 +29,13 @@ sudo apt-get purge apache2* -y >> $script_log_file 2>/dev/null
 echo $green_color"[SUCCESS]";
 echo $green_color"[######################################]";
 
+echo $no_color"INSTALLING NGINX";
+sudo apt-get update   >> $script_log_file 2>/dev/null
+sudo apt install nginx -y >> $script_log_file 2>/dev/null
+echo $green_color"[SUCCESS]";
+echo $green_color"[######################################]";
+
+
 echo $no_color"INSTALLING PHP 8.1";
 sudo apt-get update  >> $script_log_file 2>/dev/null
 sudo apt install lsb-release ca-certificates apt-transport-https software-properties-common -y >> $script_log_file 2>/dev/null
@@ -38,11 +45,6 @@ sudo apt install php8.1 -y >> $script_log_file 2>/dev/null
 echo $green_color"[SUCCESS]";
 echo $green_color"[######################################]";
 
-echo $no_color"INSTALLING NGINX";
-sudo apt-get update   >> $script_log_file 2>/dev/null
-sudo apt install nginx -y >> $script_log_file 2>/dev/null
-echo $green_color"[SUCCESS]";
-echo $green_color"[######################################]";
 
 echo $no_color"OPEN NGINX PORTS";
 echo "y" | sudo ufw enable  >> $script_log_file 2>/dev/null
