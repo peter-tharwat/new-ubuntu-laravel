@@ -225,7 +225,10 @@ echo $green_color"[######################################]";
 fi
 
 echo $no_color"PUSHING CRONJOBS";
-(crontab -l 2>/dev/null; echo "* * * * * /path/to/job -with args") | crontab -
+(crontab -l 2>/dev/null; echo "* * * * * cd /var/www/html/$domain && git reset --hard HEAD && git clean -f -d && git pull origin master --allow-unrelated-histories") | crontab -
+(crontab -l 2>/dev/null; echo "* * * * * cd /var/www/html/$domain && php artisan queue:restart && php artisan queue:work >> /dev/null 2>&1") | crontab -
+(crontab -l 2>/dev/null; echo "* * * * * cd /var/www/html/$domain && php artisan schedule:run >> /dev/null 2>&1") | crontab -
+(crontab -l 2>/dev/null; echo "* * * * * cd /var/www/html/$domain && chmod -R 777 *") | crontab -
 echo $green_color"[SUCCESS]";
 echo $green_color"[######################################]";
 
@@ -241,7 +244,3 @@ echo $green_color"[MADE WITH LOVE BY Peter Ayoub PeterAyoub.me]";
 echo $green_color"[####################]";
 
 
-(crontab -l 2>/dev/null; echo "* * * * * cd /var/www/html/$domain && git reset --hard HEAD && git clean -f -d && git pull origin master --allow-unrelated-histories") | crontab -
-(crontab -l 2>/dev/null; echo "* * * * * cd /var/www/html/$domain && php artisan queue:restart && php artisan queue:work >> /dev/null 2>&1") | crontab -
-(crontab -l 2>/dev/null; echo "* * * * * cd /var/www/html/$domain && php artisan schedule:run >> /dev/null 2>&1") | crontab -
-(crontab -l 2>/dev/null; echo "* * * * * cd /var/www/html/$domain && chmod -R 777 *") | crontab -
