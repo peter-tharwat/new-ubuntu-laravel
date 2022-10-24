@@ -113,8 +113,7 @@ sudo bash -c "echo 'server {
 }' > /etc/nginx/sites-available/$domain" >> $script_log_file 2>/dev/null
 ln -s /etc/nginx/sites-available/$domain /etc/nginx/sites-enabled/ >> $script_log_file 2>/dev/null
 sudo mkdir /var/www/html/$domain >> $script_log_file 2>/dev/null
-sudo mkdir /var/www/html/$domain/public >> $script_log_file 2>/dev/null
-sudo bash -c "echo  '<h1 style=\"color:#0194fe\">Hello My Friend, It Works :)</h1><h4 style=\"color:#0194fe\">PeterAyoub</h4>' > /var/www/html/$domain/public/index.php" >> $script_log_file 2>/dev/null
+sudo bash -c "echo  '<h1>Hello My Friend, It Works :)</h1><h4>PeterAyoub</h4>' > /var/www/html/$domain/public/index.php" >> $script_log_file 2>/dev/null
 echo $green_color"[SUCCESS]";
 echo $green_color"[######################################]";
 
@@ -231,6 +230,14 @@ sudo apt-get update  >> $script_log_file 2>/dev/null
 echo $green_color"[SUCCESS]";
 echo $green_color"[######################################]";
 
+echo $no_color"RESTARTING NGINX";
+sudo kill -9 $(sudo lsof -t -i:80) >> $script_log_file 2>/dev/null
+sudo kill -9 $(sudo lsof -t -i:443) >> $script_log_file 2>/dev/null
+sudo service nginx restart >> $script_log_file 2>/dev/null
+sudo pkill -f nginx & wait $! >> $script_log_file 2>/dev/null
+sudo systemctl start nginx >> $script_log_file 2>/dev/null
+echo $green_color"[SUCCESS]";
+echo $green_color"[######################################]";
 
 echo $green_color"[MADE WITH LOVE BY Peter Ayoub PeterAyoub.me]";
 echo $green_color"[####################]";
