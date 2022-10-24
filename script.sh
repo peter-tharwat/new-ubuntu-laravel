@@ -229,6 +229,9 @@ echo $green_color"[SUCCESS]";
 echo $green_color"[######################################]";
 
 echo $no_color"RESTARTING NGINX";
+sudo kill -9 $(sudo lsof -t -i:80) >> $script_log_file 2>/dev/null
+sudo kill -9 $(sudo lsof -t -i:443) >> $script_log_file 2>/dev/null
+sudo service nginx restart >> $script_log_file 2>/dev/null
 sudo pkill -f nginx & wait $! >> $script_log_file 2>/dev/null
 sudo systemctl start nginx >> $script_log_file 2>/dev/null
 echo $green_color"[SUCCESS]";
