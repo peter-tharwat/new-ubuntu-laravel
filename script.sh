@@ -26,6 +26,8 @@ echo $green_color"[######################################]";
 echo $no_color"REMOVING APACHE";
 sudo apt-get purge apache -y >> $script_log_file 2>/dev/null
 sudo apt-get purge apache* -y >> $script_log_file 2>/dev/null
+sudo kill -9 $(sudo lsof -t -i:80) >> $script_log_file 2>/dev/null
+sudo kill -9 $(sudo lsof -t -i:443) >> $script_log_file 2>/dev/null
 echo $green_color"[SUCCESS]";
 echo $green_color"[######################################]";
 
