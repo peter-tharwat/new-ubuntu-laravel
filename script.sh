@@ -92,7 +92,7 @@ echo $green_color"[SUCCESS]";
 echo $green_color"[######################################]";
 
 echo $no_color"CREATING NGINX FILE FOR $domain";
-#sudo rm -rf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default >> $script_log_file 2>/dev/null
+sudo rm -rf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default >> $script_log_file 2>/dev/null
 sudo touch /etc/nginx/sites-available/$domain >> $script_log_file 2>/dev/null
 sudo bash -c "echo 'server {
     listen 80;
