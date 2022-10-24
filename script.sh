@@ -98,6 +98,7 @@ sudo bash -c "echo 'server {
 }' > /etc/nginx/sites-available/$domain" >> $script_log_file 2>/dev/null
 ln -s /etc/nginx/sites-available/$domain /etc/nginx/sites-enabled/ >> $script_log_file 2>/dev/null
 sudo mkdir /var/www/html/$domain >> $script_log_file 2>/dev/null
+sudo bash -c "echo  '<h1>Hello My Friend, It Works :)</h1><h4>PeterAyoub</h4>' > /etc/nginx/sites-available/$domain/index.php" >> $script_log_file 2>/dev/null
 echo $green_color"[SUCCESS]";
 echo $green_color"[######################################]";
 
