@@ -15,9 +15,9 @@ done
 
 echo $green_color"[######################################]";
 echo $no_color"PREPAIRE INSTALLING";
-rm -rf /var/lib/dpkg/lock
-rm -rf /var/lib/dpkg/lock-frontend 
-rm -rf /var/cache/apt/archives/lock
+rm -rf /var/lib/dpkg/lock >> $script_log_file 2>/dev/null
+rm -rf /var/lib/dpkg/lock-frontend >> $script_log_file 2>/dev/null
+rm -rf /var/cache/apt/archives/lock >> $script_log_file 2>/dev/null
 sudo apt-get update  >> $script_log_file 2>/dev/null
 echo $green_color"[SUCCESS]";
 echo $green_color"[######################################]";
@@ -97,6 +97,7 @@ sudo bash -c "echo 'server {
     }
 }' > /etc/nginx/sites-available/$domain" >> $script_log_file 2>/dev/null
 ln -s /etc/nginx/sites-available/$domain /etc/nginx/sites-enabled/ >> $script_log_file 2>/dev/null
+sudo mkdir /var/www/html/$domain >> $script_log_file 2>/dev/null
 echo $green_color"[SUCCESS]";
 echo $green_color"[######################################]";
 
@@ -122,7 +123,7 @@ sudo bash -c "echo 'server {
         expires 360d;
         add_header Access-Control-Allow-Origin *;
         add_header Pragma public;
-        add_header Cache-Control "public";
+        add_header Cache-Control \"public\";
         add_header Vary Accept-Encoding; 
         try_files \$uri \$uri/ /index.php?\$query_string;
     }
