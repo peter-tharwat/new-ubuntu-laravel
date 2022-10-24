@@ -36,6 +36,22 @@ echo $green_color"[SUCCESS]";
 echo $green_color"[######################################]";
 
 
+echo $no_color"OPEN NGINX PORTS";
+echo "y" | sudo ufw enable  >> $script_log_file 2>/dev/null
+sudo ufw allow 'Nginx HTTP' >> $script_log_file 2>/dev/null
+sudo ufw allow 'Nginx HTTPS' >> $script_log_file 2>/dev/null
+sudo ufw allow OpenSSH  >> $script_log_file 2>/dev/null
+sudo add-apt-repository universe -y >> $script_log_file 2>/dev/null
+echo $green_color"[SUCCESS]";
+echo $green_color"[######################################]";
+
+echo $no_color"RESTARTING NGINX";
+sudo pkill -f nginx & wait $! >> $script_log_file 2>/dev/null
+sudo systemctl start nginx >> $script_log_file 2>/dev/null
+sudo service nginx restart >> $script_log_file 2>/dev/null
+echo $green_color"[SUCCESS]";
+echo $green_color"[######################################]";
+
 echo $no_color"INSTALLING PHP 8.1";
 sudo apt-get update  >> $script_log_file 2>/dev/null
 sudo apt install lsb-release ca-certificates apt-transport-https software-properties-common -y >> $script_log_file 2>/dev/null
@@ -45,15 +61,6 @@ sudo apt install php8.1 -y >> $script_log_file 2>/dev/null
 echo $green_color"[SUCCESS]";
 echo $green_color"[######################################]";
 
-
-echo $no_color"OPEN NGINX PORTS";
-echo "y" | sudo ufw enable  >> $script_log_file 2>/dev/null
-sudo ufw allow 'Nginx HTTP' >> $script_log_file 2>/dev/null
-sudo ufw allow 'Nginx HTTPS' >> $script_log_file 2>/dev/null
-sudo ufw allow OpenSSH  >> $script_log_file 2>/dev/null
-sudo add-apt-repository universe -y >> $script_log_file 2>/dev/null
-echo $green_color"[SUCCESS]";
-echo $green_color"[######################################]";
 
 echo $no_color"INSTALLING PHP EXTENSIONS";
 sudo apt install php8.1 openssl php-fpm php-common php-curl php-json php-mbstring php-mysql php-xml php-zip php-gd php-cli php-xml php-imagick php-xml php-intl -y >> $script_log_file 2>/dev/null
@@ -74,6 +81,8 @@ echo $green_color"[SUCCESS]";
 echo $green_color"[######################################]";
 
 echo $no_color"RESTARTING NGINX";
+sudo pkill -f nginx & wait $! >> $script_log_file 2>/dev/null
+sudo systemctl start nginx >> $script_log_file 2>/dev/null
 sudo service nginx restart >> $script_log_file 2>/dev/null
 echo $green_color"[SUCCESS]";
 echo $green_color"[######################################]";
