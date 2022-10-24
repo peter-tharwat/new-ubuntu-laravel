@@ -24,8 +24,8 @@ echo $green_color"[######################################]";
 
 
 echo $no_color"REMOVING APACHE";
-sudo apt-get purge apache2 -y >> $script_log_file 2>/dev/null
-sudo apt-get purge apache2* -y >> $script_log_file 2>/dev/null
+sudo apt-get purge apache -y >> $script_log_file 2>/dev/null
+sudo apt-get purge apache* -y >> $script_log_file 2>/dev/null
 echo $green_color"[SUCCESS]";
 echo $green_color"[######################################]";
 
@@ -64,6 +64,8 @@ echo $green_color"[######################################]";
 
 echo $no_color"INSTALLING PHP EXTENSIONS";
 sudo apt install php8.1 openssl php-fpm php-common php-curl php-json php-mbstring php-mysql php-xml php-zip php-gd php-cli php-xml php-imagick php-xml php-intl -y >> $script_log_file 2>/dev/null
+sudo apt-get purge apache -y >> $script_log_file 2>/dev/null
+sudo apt-get purge apache* -y >> $script_log_file 2>/dev/null
 echo $green_color"[SUCCESS]";
 echo $green_color"[######################################]";
 
