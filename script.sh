@@ -98,7 +98,7 @@ sudo bash -c "echo 'server {
 }' > /etc/nginx/sites-available/$domain" >> $script_log_file 2>/dev/null
 ln -s /etc/nginx/sites-available/$domain /etc/nginx/sites-enabled/ >> $script_log_file 2>/dev/null
 sudo mkdir /var/www/html/$domain >> $script_log_file 2>/dev/null
-sudo bash -c "echo  '<h1>Hello My Friend, It Works :)</h1><h4>PeterAyoub</h4>' > /etc/nginx/sites-available/$domain/index.php" >> $script_log_file 2>/dev/null
+sudo bash -c "echo  '<h1>Hello My Friend, It Works :)</h1><h4>PeterAyoub</h4>' > /var/www/html/$domain/index.php" >> $script_log_file 2>/dev/null
 echo $green_color"[SUCCESS]";
 echo $green_color"[######################################]";
 
@@ -191,13 +191,11 @@ sudo expect ~/secure_our_mysql.sh >> $script_log_file 2>/dev/null
 rm -v ~/secure_our_mysql.sh >> $script_log_file 2>/dev/null
 echo $green_color"[SUCCESS] YOUR ROOT PASSWORD IS : $MYSQL_ROOT_PASSWORD"; >> $script_log_file 2>/dev/null
 echo $green_color"[######################################]";
-exit 1
 fi
 
 if ! [ -x "$(command -v mysql)"  >> $script_log_file 2>/dev/null ]; then
 echo $green_color"[MYSQL ALREADY INSTALLED!]";
 echo $green_color"[######################################]";
-exit 1
 fi
 
 echo $no_color"FINALIZE INSTALLING";
