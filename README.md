@@ -23,6 +23,7 @@
 wget https://raw.githubusercontent.com/peter-tharwat/new-ubuntu-laravel/master/script.sh ; sudo chmod +x script.sh ; ./script.sh -d example.com
 # Replace example.com with your domain
 ```
+![https://raw.githubusercontent.com/peter-tharwat/new-ubuntu-laravel/master/public/screenshot.jpg](https://raw.githubusercontent.com/peter-tharwat/new-ubuntu-laravel/master/public/screenshot.jpg)
 
 ### How To Debug LIVE
 
@@ -32,3 +33,4 @@ tail -f script_log.log
 
 ### 
 Made With Love By [PeterAyoub](https://PeterAyoub.me/)
+
