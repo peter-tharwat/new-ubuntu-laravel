@@ -25,8 +25,6 @@ sudo mv composer.phar /usr/local/bin/composer >> $script_log_file 2>/dev/null
 echo $green_color"[SUCCESS]";
 echo $green_color"[######################################]";
 
-
-echo $green_color"[######################################]";
 echo $no_color"PREPAIRE INSTALLING";
 rm -rf /var/lib/dpkg/lock >> $script_log_file 2>/dev/null
 rm -rf /var/lib/dpkg/lock-frontend >> $script_log_file 2>/dev/null
@@ -67,18 +65,18 @@ sudo service nginx restart >> $script_log_file 2>/dev/null
 echo $green_color"[SUCCESS]";
 echo $green_color"[######################################]";
 
-echo $no_color"INSTALLING PHP 8.1";
+echo $no_color"INSTALLING PHP 8.2";
 sudo apt-get update  >> $script_log_file 2>/dev/null
 sudo apt install lsb-release ca-certificates apt-transport-https software-properties-common -y >> $script_log_file 2>/dev/null
 sudo add-apt-repository ppa:ondrej/php -y >> $script_log_file 2>/dev/null
 sudo apt-get update  >> $script_log_file 2>/dev/null
-sudo apt install php8.1 -y >> $script_log_file 2>/dev/null
+sudo apt install php8.2 -y >> $script_log_file 2>/dev/null
 echo $green_color"[SUCCESS]";
 echo $green_color"[######################################]";
 
 
 echo $no_color"INSTALLING PHP EXTENSIONS";
-sudo apt install php8.1 openssl php-fpm php-common php-curl php-json php-mbstring php-mysql php-xml php-zip php-gd php-cli php-xml php-imagick php-xml php-intl -y >> $script_log_file 2>/dev/null
+sudo apt install php8.2 openssl php8.2-fpm php8.2-common php8.2-curl php8.2-json php8.2-mbstring php8.2-mysql php8.2-xml php8.2-zip php8.2-gd php8.2-cli php8.2-xml php8.2-imagick php8.2-xml php8.2-intl -y >> $script_log_file 2>/dev/null
 sudo apt-get purge apache -y >> $script_log_file 2>/dev/null
 sudo apt-get purge apache* -y >> $script_log_file 2>/dev/null
 echo $green_color"[SUCCESS]";
@@ -118,7 +116,7 @@ sudo bash -c "echo 'server {
     }
     location ~ \.php$ {
         include snippets/fastcgi-php.conf;
-        fastcgi_pass unix:/var/run/php/php8.1-fpm.sock;
+        fastcgi_pass unix:/var/run/php/php8.2-fpm.sock;
     }
     location ~ /\.ht {
             deny all;
@@ -181,7 +179,7 @@ sudo bash -c "echo 'server {
 
     location ~ \.php\$ {
         include snippets/fastcgi-php.conf;
-        fastcgi_pass unix:/var/run/php/php8.1-fpm.sock;
+        fastcgi_pass unix:/var/run/php/php8.2-fpm.sock;
     }
    listen 443 ssl; # managed by Certbot
    server_name '$domain' www.'$domain';
@@ -229,8 +227,20 @@ EOF
 sudo expect ~/secure_our_mysql.sh >> $script_log_file 2>/dev/null
 rm -v ~/secure_our_mysql.sh >> $script_log_file 2>/dev/null
 echo $green_color"[SUCCESS] YOUR ROOT PASSWORD IS : $MYSQL_ROOT_PASSWORD"; >> $script_log_file 2>/dev/null
+sudo bash -c "echo $MYSQL_ROOT_PASSWORD > /var/www/html/mysql"  >> $script_log_file 2>/dev/null
+echo $green_color"[SUCCESS]";
 echo $green_color"[######################################]";
 fi
+
+echo $green_color"CHANGING PHP FPM UPLOAD VALUES";
+sudo sed -i 's/post_max_size = 8M/post_max_size = 1000M/g' /etc/php/8.2/fpm/php.ini >> $script_log_file 2>/dev/null
+sudo sed -i 's/upload_max_filesize = 2M/upload_max_filesize = 1000M/g' /etc/php/8.2/fpm/php.ini >> $script_log_file 2>/dev/null
+sudo sed -i 's/max_execution_time = 30/max_execution_time = 300/g' /etc/php/8.2/fpm/php.ini >> $script_log_file 2>/dev/null
+sudo sed -i 's/memory_limit = 128/memory_limit = 12800/g' /etc/php/8.2/fpm/php.ini >> $script_log_file 2>/dev/null
+sudo service php8.2-fpm restart >> $script_log_file 2>/dev/null
+echo $green_color"[SUCCESS]";
+echo $green_color"[######################################]";
+
 
 if ! [ -x "$(command -v mysql)"  >> $script_log_file 2>/dev/null ]; then
 echo $green_color"[MYSQL ALREADY INSTALLED!]";
