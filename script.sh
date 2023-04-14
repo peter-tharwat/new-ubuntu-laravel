@@ -22,7 +22,6 @@ sudo apt-get update  >> $script_log_file 2>/dev/null
 echo $green_color"[SUCCESS]";
 echo $green_color"[######################################]";
 
-
 echo $no_color"REMOVING APACHE";
 sudo apt-get purge apache -y >> $script_log_file 2>/dev/null
 sudo apt-get purge apache* -y >> $script_log_file 2>/dev/null
@@ -36,7 +35,6 @@ sudo apt-get update   >> $script_log_file 2>/dev/null
 sudo apt install nginx -y >> $script_log_file 2>/dev/null
 echo $green_color"[SUCCESS]";
 echo $green_color"[######################################]";
-
 
 echo $no_color"OPEN NGINX PORTS";
 echo "y" | sudo ufw enable  >> $script_log_file 2>/dev/null
@@ -63,9 +61,8 @@ sudo apt install php8.2 -y >> $script_log_file 2>/dev/null
 echo $green_color"[SUCCESS]";
 echo $green_color"[######################################]";
 
-
 echo $no_color"INSTALLING PHP EXTENSIONS";
-sudo apt install php8.2 openssl php8.2-fpm php8.2-common php8.2-curl php8.2-mbstring php8.2-mysql php8.2-xml php8.2-zip php8.2-gd php8.2-cli php8.2-xml php8.2-imagick php8.2-xml php8.2-intl php-mysql -y >> $script_log_file 2>/dev/null
+sudo apt install php8.2 openssl php8.2-fpm php8.2-common php8.2-curl php8.2-mbstring php8.2-mysql php8.2-xml php8.2-bcmath php8.2-zip php8.2-gd php8.2-cli php8.2-xml php8.2-imagick php8.2-xml php8.2-intl php-mysql -y >> $script_log_file 2>/dev/null
 sudo apt-get purge apache -y >> $script_log_file 2>/dev/null
 sudo apt-get purge apache* -y >> $script_log_file 2>/dev/null
 echo $green_color"[SUCCESS]";
@@ -128,16 +125,12 @@ sudo bash -c "echo  '<h1 style=\"color:#0194fe\">Hello My Friend, It Works :)</h
 echo $green_color"[SUCCESS]";
 echo $green_color"[######################################]";
 
-
 echo $no_color"RESTARTING NGINX";
 sudo pkill -f nginx & wait $! >> $script_log_file 2>/dev/null
 sudo systemctl start nginx >> $script_log_file 2>/dev/null
 sudo service nginx restart >> $script_log_file 2>/dev/null
 echo $green_color"[SUCCESS]";
 echo $green_color"[######################################]";
-
-
-
 
 echo $no_color"GENERATING SSL CERTIFICATE FOR $domain"
 certbot --nginx -d $domain -d www.$domain --non-interactive --agree-tos -m admin@$domain >> $script_log_file 2>/dev/null
@@ -240,7 +233,6 @@ sudo service php8.2-fpm restart >> $script_log_file 2>/dev/null
 echo $green_color"[SUCCESS]";
 echo $green_color"[######################################]";
 
-
 if ! [ -x "$(command -v mysql)"  >> $script_log_file 2>/dev/null ]; then
 echo $green_color"[MYSQL ALREADY INSTALLED!]";
 echo $green_color"[######################################]";
@@ -262,7 +254,6 @@ sudo apt-get autoclean -y >> $script_log_file 2>/dev/null
 sudo apt-get update  >> $script_log_file 2>/dev/null
 echo $green_color"[SUCCESS]";
 echo $green_color"[######################################]";
-
 
 echo $green_color"[MADE WITH LOVE BY Peter Ayoub PeterAyoub.me]";
 echo $green_color"[####################]";
