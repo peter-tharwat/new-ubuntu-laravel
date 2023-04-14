@@ -14,17 +14,6 @@ do
 done
 
 
-
-echo $green_color"[######################################]";
-echo $no_color"INSTALLING COMPOSER";
-sudo apt-get update  >> $script_log_file 2>/dev/null
-sudo apt-get purge composer -y >> $script_log_file 2>/dev/null
-php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" >> $script_log_file 2>/dev/null
-php composer-setup.php >> $script_log_file  2>/dev/null
-sudo mv composer.phar /usr/local/bin/composer >> $script_log_file 2>/dev/null
-echo $green_color"[SUCCESS]";
-echo $green_color"[######################################]";
-
 echo $no_color"PREPAIRE INSTALLING";
 rm -rf /var/lib/dpkg/lock >> $script_log_file 2>/dev/null
 rm -rf /var/lib/dpkg/lock-frontend >> $script_log_file 2>/dev/null
@@ -84,6 +73,16 @@ echo $green_color"[######################################]";
 
 echo $no_color"INSTALLING NPM";
 sudo apt install npm -y >> $script_log_file 2>/dev/null
+echo $green_color"[SUCCESS]";
+echo $green_color"[######################################]";
+
+echo $green_color"[######################################]";
+echo $no_color"INSTALLING COMPOSER";
+sudo apt-get update  >> $script_log_file 2>/dev/null
+sudo apt-get purge composer -y >> $script_log_file 2>/dev/null
+php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" >> $script_log_file 2>/dev/null
+php composer-setup.php >> $script_log_file  2>/dev/null
+sudo mv composer.phar /usr/local/bin/composer >> $script_log_file 2>/dev/null
 echo $green_color"[SUCCESS]";
 echo $green_color"[######################################]";
 
