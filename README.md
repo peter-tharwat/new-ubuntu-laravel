@@ -4,18 +4,19 @@
 
 - ✅  PREPAIRE Installing
 - ✅  REMOVING APACHE
-- ✅  Installing PHP 8.2
 - ✅  Installing NGINX
 - ✅  OPEN NGINX PORTS
+- ✅  Installing PHP 8.2
 - ✅  Installing PHP EXTENSIONS
-- ✅  INCREASING FPM UPLOAD VALUES
 - ✅  Installing NPM
+- ✅  INSTALLING COMPOSER
 - ✅  Installing CERTBOT (SSL GENERATOR)
 - ✅  CREATING NGINX FILE FOR [example.com](http://example.com/)
 - ✅  GENERATING SSL CERTIFICATE FOR [example.com](http://example.com/)
-- ✅  Finalize Installing
 - ✅  Installing MySQL
+- ✅  INCREASING FPM UPLOAD VALUES
 - ✅  Pushing Cronjobs
+- ✅  Finalize Installing
 
 ### How to Use
 
