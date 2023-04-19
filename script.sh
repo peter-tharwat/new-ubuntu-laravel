@@ -153,6 +153,12 @@ sudo bash -c "echo 'server {
     client_max_body_size 1000M;
     fastcgi_read_timeout 8600;
     proxy_cache_valid 200 365d;
+    if (!-d \$request_filename) {
+      rewrite ^/(.+)/$ /\$1 permanent;
+    }
+    if (\$request_uri ~* "\/\/") {
+      rewrite ^/(.*) /\$1 permanent;
+    }
     location ~ \.(env|log|htaccess)\$ {
         deny all;
     }
@@ -166,7 +172,10 @@ sudo bash -c "echo 'server {
         try_files \$uri \$uri/ /index.php?\$query_string;
     }
     location / {
-    add_header Access-Control-Allow-Origin *;
+        add_header Access-Control-Allow-Origin *;
+        if (\$request_uri ~* \"^(.*/)index\.php(/?)(.*)\") {
+              return 301 \$1\$3;
+        }
         if (\$host ~* ^(www)) {
             rewrite ^/(.*)\$ https://'$domain'/\$1 permanent;
         }
@@ -249,7 +258,7 @@ fi
 
 echo $no_color"PUSHING CRONJOBS";
 (crontab -l 2>/dev/null; echo "################## START $domain ####################") | crontab -
-(crontab -l 2>/dev/null; echo "* * * * * cd /var/www/html/$domain && git reset --hard HEAD && git clean -f -d && git pull origin master --allow-unrelated-histories") | crontab -
+(crontab -l 2>/dev/null; echo "* * * * * cd /var/www/html/$domain && rm -f ./.git/index.lock && git reset --hard HEAD && git clean -f -d && git pull origin master --allow-unrelated-histories") | crontab -
 (crontab -l 2>/dev/null; echo "* * * * * cd /var/www/html/$domain && php artisan queue:restart && php artisan queue:work >> /dev/null 2>&1") | crontab -
 (crontab -l 2>/dev/null; echo "* * * * * cd /var/www/html/$domain && php artisan schedule:run >> /dev/null 2>&1") | crontab -
 (crontab -l 2>/dev/null; echo "* * * * * cd /var/www/html/$domain && chmod -R 777 *") | crontab -
