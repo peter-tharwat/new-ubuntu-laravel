@@ -15,15 +15,6 @@ done
 
 
 
-echo $green_color"[######################################]";
-echo $no_color"INSTALLING COMPOSER";
-sudo apt-get update  >> $script_log_file 2>/dev/null
-sudo apt-get purge composer -y >> $script_log_file 2>/dev/null
-php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" >> $script_log_file 2>/dev/null
-php composer-setup.php >> $script_log_file  2>/dev/null
-sudo mv composer.phar /usr/local/bin/composer >> $script_log_file 2>/dev/null
-echo $green_color"[SUCCESS]";
-echo $green_color"[######################################]";
 
 echo $no_color"PREPAIRE INSTALLING";
 rm -rf /var/lib/dpkg/lock >> $script_log_file 2>/dev/null
@@ -53,6 +44,7 @@ echo $no_color"OPEN NGINX PORTS";
 echo "y" | sudo ufw enable  >> $script_log_file 2>/dev/null
 sudo ufw allow 'Nginx HTTP' >> $script_log_file 2>/dev/null
 sudo ufw allow 'Nginx HTTPS' >> $script_log_file 2>/dev/null
+sudo ufw allow '8443' >> $script_log_file 2>/dev/null
 sudo ufw allow OpenSSH  >> $script_log_file 2>/dev/null
 sudo add-apt-repository universe -y >> $script_log_file 2>/dev/null
 echo $green_color"[SUCCESS]";
@@ -95,6 +87,16 @@ sudo ln -s /snap/bin/certbot /usr/bin/certbot >> $script_log_file 2>/dev/null
 echo $green_color"[SUCCESS]";
 echo $green_color"[######################################]";
 
+echo $green_color"[######################################]";
+echo $no_color"INSTALLING COMPOSER";
+sudo apt-get update  >> $script_log_file 2>/dev/null
+sudo apt-get purge composer -y >> $script_log_file 2>/dev/null
+php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" >> $script_log_file 2>/dev/null
+php composer-setup.php >> $script_log_file  2>/dev/null
+sudo mv composer.phar /usr/local/bin/composer >> $script_log_file 2>/dev/null
+echo $green_color"[SUCCESS]";
+echo $green_color"[######################################]";
+
 echo $no_color"RESTARTING NGINX";
 sudo pkill -f nginx & wait $! >> $script_log_file 2>/dev/null
 sudo systemctl start nginx >> $script_log_file 2>/dev/null
@@ -125,7 +127,7 @@ sudo bash -c "echo 'server {
 ln -s /etc/nginx/sites-available/$domain /etc/nginx/sites-enabled/ >> $script_log_file 2>/dev/null
 sudo mkdir /var/www/html/$domain >> $script_log_file 2>/dev/null
 sudo mkdir /var/www/html/$domain/public >> $script_log_file 2>/dev/null
-sudo bash -c "echo  '<h1 style=\"color:#0194fe\">Hello My Friend, It Works :)</h1><h4 style=\"color:#0194fe\">PeterAyoub</h4>' > /var/www/html/$domain/public/index.php" >> $script_log_file 2>/dev/null
+sudo bash -c "echo  '<h1 style=\"color:#0194fe\">Welcome</h1><h4 style=\"color:#0194fe\">$domain</h4>' > /var/www/html/$domain/public/index.php" >> $script_log_file 2>/dev/null
 echo $green_color"[SUCCESS]";
 echo $green_color"[######################################]";
 
@@ -147,7 +149,7 @@ sudo touch /etc/nginx/sites-available/$domain >> $script_log_file 2>/dev/null
 
 sudo bash -c "echo 'server {
     listen 80;
-    access_log off;
+    #access_log off;
     root /var/www/html/'$domain'/public;
     index index.php index.html index.htm index.nginx-debian.html;
     client_max_body_size 1000M;
@@ -183,7 +185,6 @@ sudo bash -c "echo 'server {
             return 301 https://'$domain'\$request_uri;
         }
         try_files \$uri \$uri/ /index.php?\$query_string;
-        access_log off;
     }
 
     location ~ \.php\$ {
@@ -258,7 +259,7 @@ fi
 
 echo $no_color"PUSHING CRONJOBS";
 (crontab -l 2>/dev/null; echo "################## START $domain ####################") | crontab -
-(crontab -l 2>/dev/null; echo "* * * * * cd /var/www/html/$domain && rm -f ./.git/index.lock && git reset --hard HEAD && git clean -f -d && git pull origin master --allow-unrelated-histories") | crontab -
+(crontab -l 2>/dev/null; echo "* * * * * cd /var/www/html/$domain && rm -rf ./.git/index.lock && git reset --hard HEAD && git clean -f -d && git pull origin master --allow-unrelated-histories") | crontab -
 (crontab -l 2>/dev/null; echo "* * * * * cd /var/www/html/$domain && php artisan queue:restart && php artisan queue:work >> /dev/null 2>&1") | crontab -
 (crontab -l 2>/dev/null; echo "* * * * * cd /var/www/html/$domain && php artisan schedule:run >> /dev/null 2>&1") | crontab -
 (crontab -l 2>/dev/null; echo "* * * * * cd /var/www/html/$domain && chmod -R 777 *") | crontab -
