@@ -259,7 +259,7 @@ fi
 
 echo $no_color"PUSHING CRONJOBS";
 (crontab -l 2>/dev/null; echo "################## START $domain ####################") | crontab -
-(crontab -l 2>/dev/null; echo "* * * * * cd /var/www/html/$domain && rm -rf ./.git/index.lock && git reset --hard HEAD && git clean -f -d && git pull origin master --allow-unrelated-histories") | crontab -
+(crontab -l 2>/dev/null; echo "* * * * * cd /var/www/html/$domain && rm -rf ./.git/index.lock && rm -rf ./.git/index && git reset --hard HEAD && git clean -f -d && git pull origin master --allow-unrelated-histories") | crontab -
 (crontab -l 2>/dev/null; echo "* * * * * cd /var/www/html/$domain && php artisan queue:restart && php artisan queue:work >> /dev/null 2>&1") | crontab -
 (crontab -l 2>/dev/null; echo "* * * * * cd /var/www/html/$domain && php artisan schedule:run >> /dev/null 2>&1") | crontab -
 (crontab -l 2>/dev/null; echo "* * * * * cd /var/www/html/$domain && chmod -R 777 *") | crontab -
