@@ -80,6 +80,8 @@ echo $green_color"[SUCCESS]";
 echo $green_color"[######################################]";
 
 echo $no_color"INSTALLING CERTBOT (SSL GENERATOR)";
+sudo apt-get install snap -y  >> $script_log_file 2>/dev/null
+sudo apt-get install snapd -y  >> $script_log_file 2>/dev/null
 sudo snap install core  >> $script_log_file 2>/dev/null
 sudo snap refresh core  >> $script_log_file 2>/dev/null
 sudo snap install --classic certbot >> $script_log_file 2>/dev/null
