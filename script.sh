@@ -271,6 +271,8 @@ echo $green_color"[######################################]";
 
 echo $no_color"FINALIZE INSTALLING";
 sudo apt-get autoremove -y >> $script_log_file 2>/dev/null
+sudo bash -c "echo 'net.core.netdev_max_backlog = 65535'" | sudo tee -a /etc/sysctl.conf >> $script_log_file 2>/dev/null
+sudo bash -c "echo 'net.core.somaxconn = 65535'" | sudo tee -a /etc/sysctl.conf >> $script_log_file 2>/dev/null
 sudo apt-get autoclean -y >> $script_log_file 2>/dev/null
 sudo apt-get update  >> $script_log_file 2>/dev/null
 echo $green_color"[SUCCESS]";
