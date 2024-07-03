@@ -66,9 +66,33 @@ sudo apt install php8.2 -y >> $script_log_file 2>/dev/null
 echo $green_color"[SUCCESS]";
 echo $green_color"[######################################]";
 
+# install php 8.2 fpm
+echo $no_color"INSTALLING PHP 8.2 FPM";
+sudo apt install php8.2-fpm -y >> $script_log_file 2>/dev/null
+echo $green_color"[SUCCESS]";
+echo $green_color"[######################################]";
+echo $no_color"INSTALLING PHP 8.2 COMMON";
+sudo apt install php8.2-common -y >> $script_log_file 2>/dev/null
+echo $green_color"[SUCCESS]";
+echo $green_color"[######################################]";
+
+#install php 8.3
+echo $no_color"INSTALLING PHP 8.3";
+sudo apt install php8.3 -y >> $script_log_file 2>/dev/null
+echo $green_color"[SUCCESS]";
+echo $green_color"[######################################]";
+
+# install php 8.3 fpm
+echo $no_color"INSTALLING PHP 8.3 FPM";
+sudo apt install php8.3-fpm -y >> $script_log_file 2>/dev/null
+echo $green_color"[SUCCESS]";
+echo $green_color"[######################################]";
 
 echo $no_color"INSTALLING PHP EXTENSIONS";
+# install php 8.2 extensions
 sudo apt install php8.2 openssl php8.2-fpm php8.2-common php8.2-curl php8.2-mbstring php8.2-mysql php8.2-xml php8.2-zip php8.2-gd php8.2-cli php8.2-xml php8.2-imagick php8.2-xml php8.2-intl php-mysql -y >> $script_log_file 2>/dev/null
+# install php 8.3 extensions
+sudo apt install php8.3 openssl php8.3-fpm php8.3-common php8.3-curl php8.3-mbstring php8.3-mysql php8.3-xml php8.3-zip php8.3-gd php8.3-cli php8.3-xml php8.3-imagick php8.3-xml php8.3-intl php-mysql -y >> $script_log_file 2>/dev/null
 sudo apt-get purge apache -y >> $script_log_file 2>/dev/null
 sudo apt-get purge apache* -y >> $script_log_file 2>/dev/null
 echo $green_color"[SUCCESS]";
