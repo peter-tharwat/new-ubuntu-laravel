@@ -215,7 +215,7 @@ sudo bash -c "echo 'server {
 
     location ~ \.php\$ {
         include snippets/fastcgi-php.conf;
-        fastcgi_pass unix:/var/run/php/php8.2-fpm.sock;
+        fastcgi_pass unix:/var/run/php/php8.3-fpm.sock;
     }
    listen 443 ssl; # managed by Certbot
    server_name '$domain' www.'$domain';
