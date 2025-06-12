@@ -274,6 +274,22 @@ sudo sed -i 's/upload_max_filesize = 2M/upload_max_filesize = 1000M/g' /etc/php/
 sudo sed -i 's/max_execution_time = 30/max_execution_time = 300/g' /etc/php/8.2/fpm/php.ini >> $script_log_file 2>/dev/null
 sudo sed -i 's/memory_limit = 128/memory_limit = 12800/g' /etc/php/8.2/fpm/php.ini >> $script_log_file 2>/dev/null
 sudo service php8.2-fpm restart >> $script_log_file 2>/dev/null
+
+
+sudo sed -i 's/post_max_size = 8M/post_max_size = 1000M/g' /etc/php/8.3/fpm/php.ini >> $script_log_file 2>/dev/null
+sudo sed -i 's/upload_max_filesize = 2M/upload_max_filesize = 1000M/g' /etc/php/8.3/fpm/php.ini >> $script_log_file 2>/dev/null
+sudo sed -i 's/max_execution_time = 30/max_execution_time = 300/g' /etc/php/8.3/fpm/php.ini >> $script_log_file 2>/dev/null
+sudo sed -i 's/memory_limit = 128/memory_limit = 12800/g' /etc/php/8.3/fpm/php.ini >> $script_log_file 2>/dev/null
+sudo service php8.3-fpm restart >> $script_log_file 2>/dev/null
+
+
+sudo sed -i 's/post_max_size = 8M/post_max_size = 1000M/g' /etc/php/8.4/fpm/php.ini >> $script_log_file 2>/dev/null
+sudo sed -i 's/upload_max_filesize = 2M/upload_max_filesize = 1000M/g' /etc/php/8.4/fpm/php.ini >> $script_log_file 2>/dev/null
+sudo sed -i 's/max_execution_time = 30/max_execution_time = 300/g' /etc/php/8.4/fpm/php.ini >> $script_log_file 2>/dev/null
+sudo sed -i 's/memory_limit = 128/memory_limit = 12800/g' /etc/php/8.4/fpm/php.ini >> $script_log_file 2>/dev/null
+sudo service php8.4-fpm restart >> $script_log_file 2>/dev/null
+
+
 echo $green_color"[SUCCESS]";
 echo $green_color"[######################################]";
 
