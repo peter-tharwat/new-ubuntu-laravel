@@ -90,16 +90,16 @@ echo $green_color"[######################################]";
 
 echo $no_color"INSTALLING PHP EXTENSIONS";
 # install php 8.2 extensions
-sudo apt install redis-server php8.2-redis php8.2 openssl php8.2-fpm php8.2-common php8.2-curl php8.2-mbstring php8.2-mysql php8.2-xml php8.2-zip php8.2-gd php8.2-cli php8.2-xml php8.2-imagick php8.2-xml php8.2-intl php-8.2-mcrypt php-mysql -y >> $script_log_file 2>/dev/null
+sudo apt install redis-server php8.2-redis php8.2-fpm php8.2-common php8.2-curl php8.2-mbstring php8.2-mysql php8.2-xml php8.2-zip php8.2-gd php8.2-cli php8.2-imagick php8.2-intl php8.2-bcmath php8.2-readline -y >> $script_log_file 2>/dev/null
 # install php 8.3 extensions
-sudo apt install redis-server php8.3 openssl php8.3-fpm php8.3-common php8.3-curl php8.3-mbstring php8.3-mysql php8.3-xml php8.3-zip php8.3-gd php8.3-cli php8.3-xml php8.3-imagick php8.3-xml php8.3-intl php-8.3-mcrypt php-mysql -y >> $script_log_file 2>/dev/null
+sudo apt install php8.3-fpm php8.3-common php8.3-curl php8.3-mbstring php8.3-mysql php8.3-xml php8.3-zip php8.3-gd php8.3-cli php8.3-imagick php8.3-intl php8.3-bcmath php8.3-readline php8.3-redis -y >> $script_log_file 2>/dev/null
 sudo apt-get purge apache -y >> $script_log_file 2>/dev/null
 sudo apt-get purge apache* -y >> $script_log_file 2>/dev/null
 echo $green_color"[SUCCESS]";
 echo $green_color"[######################################]";
 
-echo $no_color"INSTALLING NPM";
-sudo apt install npm -y >> $script_log_file 2>/dev/null
+echo $no_color"INSTALLING NPM, GIT & UNZIP";
+sudo apt install npm git unzip -y >> $script_log_file 2>/dev/null
 echo $green_color"[SUCCESS]";
 echo $green_color"[######################################]";
 
@@ -282,12 +282,13 @@ sudo sed -i 's/max_execution_time = 30/max_execution_time = 300/g' /etc/php/8.3/
 sudo sed -i 's/memory_limit = 128/memory_limit = 12800/g' /etc/php/8.3/fpm/php.ini >> $script_log_file 2>/dev/null
 sudo service php8.3-fpm restart >> $script_log_file 2>/dev/null
 
-
+if [ -f /etc/php/8.4/fpm/php.ini ]; then
 sudo sed -i 's/post_max_size = 8M/post_max_size = 1000M/g' /etc/php/8.4/fpm/php.ini >> $script_log_file 2>/dev/null
 sudo sed -i 's/upload_max_filesize = 2M/upload_max_filesize = 1000M/g' /etc/php/8.4/fpm/php.ini >> $script_log_file 2>/dev/null
 sudo sed -i 's/max_execution_time = 30/max_execution_time = 300/g' /etc/php/8.4/fpm/php.ini >> $script_log_file 2>/dev/null
 sudo sed -i 's/memory_limit = 128/memory_limit = 12800/g' /etc/php/8.4/fpm/php.ini >> $script_log_file 2>/dev/null
 sudo service php8.4-fpm restart >> $script_log_file 2>/dev/null
+fi
 
 
 
@@ -313,6 +314,7 @@ sudo sed -i 's/^pm.max_requests = .*/pm.max_requests = 1000/' /etc/php/8.3/fpm/p
 sudo sed -i 's/^request_terminate_timeout = .*/request_terminate_timeout = 0/' /etc/php/8.3/fpm/pool.d/www.conf >> $script_log_file 2>/dev/null
 sudo service php8.3-fpm restart >> $script_log_file 2>/dev/null
 
+if [ -f /etc/php/8.4/fpm/pool.d/www.conf ]; then
 # PHP 8.4
 sudo sed -i 's/^pm = .*/pm = dynamic/' /etc/php/8.4/fpm/pool.d/www.conf >> $script_log_file 2>/dev/null
 sudo sed -i 's/^pm.max_children = .*/pm.max_children = 500/' /etc/php/8.4/fpm/pool.d/www.conf >> $script_log_file 2>/dev/null
@@ -322,6 +324,7 @@ sudo sed -i 's/^pm.max_spare_servers = .*/pm.max_spare_servers = 64/' /etc/php/8
 sudo sed -i 's/^pm.max_requests = .*/pm.max_requests = 1000/' /etc/php/8.4/fpm/pool.d/www.conf >> $script_log_file 2>/dev/null
 sudo sed -i 's/^request_terminate_timeout = .*/request_terminate_timeout = 0/' /etc/php/8.4/fpm/pool.d/www.conf >> $script_log_file 2>/dev/null
 sudo service php8.4-fpm restart >> $script_log_file 2>/dev/null
+fi
 
 
 
