@@ -109,6 +109,23 @@ sudo apt install php8.3-fpm php8.3-common php8.3-curl php8.3-mbstring php8.3-mys
 # install php 8.4 extensions (bcmath required by google/protobuf / Analytics API)
 sudo apt install php8.4-fpm php8.4-common php8.4-curl php8.4-mbstring php8.4-mysql php8.4-xml php8.4-zip php8.4-gd php8.4-cli php8.4-imagick php8.4-intl php8.4-bcmath php8.4-readline php8.4-redis -y >> $script_log_file 2>/dev/null
 
+echo $no_color"VERIFYING PHP BCMATH";
+for ver in 8.2 8.3 8.4; do
+  if apt-cache show "php${ver}-bcmath" >> $script_log_file 2>/dev/null; then
+    sudo apt install -y "php${ver}-bcmath" >> $script_log_file 2>/dev/null
+  fi
+  if [ -d "/etc/php/${ver}/fpm" ]; then
+    sudo systemctl restart "php${ver}-fpm" >> $script_log_file 2>/dev/null || sudo service "php${ver}-fpm" restart >> $script_log_file 2>/dev/null || true
+  fi
+done
+for bin in php php8.2 php8.3 php8.4; do
+  if command -v "$bin" >/dev/null 2>&1; then
+    "$bin" -m | grep -q '^bcmath$' && echo "  OK  $bin" >> $script_log_file || echo "  FAIL $bin (bcmath missing)" >> $script_log_file
+  fi
+done
+echo $green_color"[SUCCESS]";
+echo $green_color"[######################################]";
+
 sudo apt-get purge apache -y >> $script_log_file 2>/dev/null
 sudo apt-get purge apache* -y >> $script_log_file 2>/dev/null
 echo $green_color"[SUCCESS]";
