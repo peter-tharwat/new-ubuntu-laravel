@@ -16,6 +16,7 @@ done
 
 
 
+
 echo $no_color"PREPAIRE INSTALLING";
 rm -rf /var/lib/dpkg/lock >> $script_log_file 2>/dev/null
 rm -rf /var/lib/dpkg/lock-frontend >> $script_log_file 2>/dev/null
