@@ -217,7 +217,7 @@ sudo bash -c "echo 'server {
     if (!-d \$request_filename) {
       rewrite ^/(.+)/$ /\$1 permanent;
     }
-    if (\$request_uri ~* "\/\/") {
+    if (\$request_uri ~ "^[^?]*//") {
       rewrite ^/(.*) /\$1 permanent;
     }
     location ~ \.(env|log|htaccess)\$ {
