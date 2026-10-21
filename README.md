@@ -4,10 +4,11 @@
 
 - ✅  PREPAIRE Installing
 - ✅  REMOVING APACHE
-- ✅  Installing PHP 8.2
+- ✅  Installing PHP 8.2 / 8.3 / 8.4
 - ✅  Installing NGINX
 - ✅  OPEN NGINX PORTS
 - ✅  Installing PHP EXTENSIONS
+- ✅  Upgrading PHP security packages (PHP2Shell / CVE-2026-109618 / CVE-2026-109619)
 - ✅  INCREASING FPM UPLOAD VALUES
 - ✅  Installing NPM
 - ✅  Installing CERTBOT (SSL GENERATOR)

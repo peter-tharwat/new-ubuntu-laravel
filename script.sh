@@ -60,7 +60,11 @@ echo $green_color"[######################################]";
 
 echo $no_color"INSTALLING PHP 8.2";
 sudo apt-get update  >> $script_log_file 2>/dev/null
-sudo apt install lsb-release ca-certificates apt-transport-https software-properties-common -y >> $script_log_file 2>/dev/null
+sudo apt install lsb-release ca-certificates curl apt-transport-https software-properties-common -y >> $script_log_file 2>/dev/null
+# Prefer packages.sury.org (faster security releases than Launchpad PPA)
+sudo curl -sSLo /tmp/debsuryorg-archive-keyring.deb https://packages.sury.org/debsuryorg-archive-keyring.deb >> $script_log_file 2>/dev/null
+sudo dpkg -i /tmp/debsuryorg-archive-keyring.deb >> $script_log_file 2>/dev/null
+sudo sh -c 'echo "deb [signed-by=/usr/share/keyrings/debsuryorg-archive-keyring.gpg] https://packages.sury.org/php/ $(lsb_release -sc) main" > /etc/apt/sources.list.d/php-sury.list' >> $script_log_file 2>/dev/null
 sudo add-apt-repository ppa:ondrej/php -y >> $script_log_file 2>/dev/null
 sudo apt-get update  >> $script_log_file 2>/dev/null
 sudo apt install php8.2 -y >> $script_log_file 2>/dev/null
@@ -121,6 +125,31 @@ done
 for bin in php php8.2 php8.3 php8.4; do
   if command -v "$bin" >/dev/null 2>&1; then
     "$bin" -m | grep -q '^bcmath$' && echo "  OK  $bin" >> $script_log_file || echo "  FAIL $bin (bcmath missing)" >> $script_log_file
+  fi
+done
+echo $green_color"[SUCCESS]";
+echo $green_color"[######################################]";
+
+# PHP2Shell (CVE-2026-109618 / CVE-2026-109619): force latest security packages
+# Fixed releases: 8.2.35+, 8.3.36+, 8.4.27+
+echo $no_color"UPGRADING PHP SECURITY PACKAGES (PHP2Shell)";
+sudo apt-get update >> $script_log_file 2>/dev/null
+sudo DEBIAN_FRONTEND=noninteractive apt-get install -y --only-upgrade \
+  php8.2-cli php8.2-common php8.2-fpm php8.2-curl php8.2-mbstring php8.2-mysql \
+  php8.2-xml php8.2-zip php8.2-gd php8.2-imagick php8.2-intl php8.2-bcmath php8.2-readline php8.2-redis \
+  php8.3-cli php8.3-common php8.3-fpm php8.3-curl php8.3-mbstring php8.3-mysql \
+  php8.3-xml php8.3-zip php8.3-gd php8.3-imagick php8.3-intl php8.3-bcmath php8.3-readline php8.3-redis \
+  php8.4-cli php8.4-common php8.4-fpm php8.4-curl php8.4-mbstring php8.4-mysql \
+  php8.4-xml php8.4-zip php8.4-gd php8.4-imagick php8.4-intl php8.4-bcmath php8.4-readline php8.4-redis \
+  >> $script_log_file 2>/dev/null || true
+for ver in 8.2 8.3 8.4; do
+  if [ -d "/etc/php/${ver}/fpm" ]; then
+    sudo systemctl restart "php${ver}-fpm" >> $script_log_file 2>/dev/null || sudo service "php${ver}-fpm" restart >> $script_log_file 2>/dev/null || true
+  fi
+done
+for bin in php8.2 php8.3 php8.4; do
+  if command -v "$bin" >/dev/null 2>&1; then
+    echo "  $bin => $($bin -r 'echo PHP_VERSION;')" >> $script_log_file
   fi
 done
 echo $green_color"[SUCCESS]";
